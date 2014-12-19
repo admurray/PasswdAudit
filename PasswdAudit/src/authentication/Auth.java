@@ -11,12 +11,14 @@ public class Auth extends Authenticator
 {    
     private String username;    
     private String password;
+    private URL url;
     
-    public Auth(String username, String password) 
+    public Auth(String username, String password, URL url) 
     {    
         super();    
         this.username = username;    
         this.password = password;    
+        this.url = url;
     }    
     
     
@@ -42,18 +44,25 @@ public class Auth extends Authenticator
 		this.password = password;
 	}
 
-
-
-	public String authenticate(String username, String password) throws IOException 
+	public void setUrl(URL url)
 	{
-		String appPage = "http://www.cse.yorku.ca/~cse92012/4413/login.cgi";
+		this.url = url;
+	}
+	
+	public URL getUrl()
+	{
+		return this.url;
+	}
+	
+
+	public String authenticate() throws IOException 
+	{
 		BufferedReader br;
 		String name = null;
 		try {    
-	            Authenticator.setDefault(new SConnAuthenticator(username, password));    
-	            URL url = new URL(appPage);    
+	            Authenticator.setDefault(new SConnAuthenticator(username, password));        
 	            int responseCode = 0;
-	            HttpURLConnection connection = (HttpURLConnection)url.openConnection(); 
+	            HttpURLConnection connection = (HttpURLConnection) this.url.openConnection(); 
 	            connection.setConnectTimeout(2000);
 	            
 	            try

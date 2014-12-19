@@ -1,0 +1,12 @@
+The basic point of this code is to effectively test for password policy
+this means that 1 the password must not be of a certain chosen kind or
+should not follow specific rules. For now, I will work on making sure
+that they do not use the passwords from a specific text doc. 
+The first requirement for that is, that I should be able to post a
+single password to the application. I will begin with zencart.
+I could have gone through the DB but I wish to accurately follow the steps
+a person would use who has no access to the DB.
+
+Another important thing that I would like to keep in mind is that I wouldn't
+want to create a new connection for each attempt. It would be ideal to have
+just one connection that keeps attempting.

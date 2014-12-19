@@ -1,40 +1,31 @@
 package connections;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import authentication.Auth;
 
 public class SingleConnection 
 {
 	private String postReq;
-	private URL url;
-	private HttpURLConnection connection;
+	private Auth auth;
 	
 	public SingleConnection()
 	{
-		this(null, null, null);
+		this(null, null);
 	}
 	
 	
-	public SingleConnection(String postReq, URL url)
+	/*
+	 * The reson I would like to have connection being handled by the 
+	 * Connection specific class, as opposed to the Auth class, is that
+	 * I would like to reuse a connection if the past connection attempt failed.
+	 * I want auth to just have the class dealing with a single auth. For now
+	 * I will let auth open the connection.
+	 */
+	public SingleConnection(String postReq, Auth auth)
 	{
 		this.postReq = postReq;
-		this.url = url;
-		try {
-			this.connection = (HttpURLConnection)url.openConnection();
-		} catch (IOException e) {
-			System.out.println("Problem in Construction of SingleConnection");
-			e.printStackTrace();
-		}
+		this.auth = auth;
 	}
 	
-	public SingleConnection(String postReq, URL url, HttpURLConnection connection)
-	{
-		this.postReq = postReq;
-		this.url = url;
-		this.connection = connection;
-	}
-
 	public String getPostReq() {
 		return postReq;
 	}
@@ -43,43 +34,13 @@ public class SingleConnection
 		this.postReq = postReq;
 	}
 
-	public URL getUrl() {
-		return url;
-	}
-
-	public void setUrl(URL url) {
-		this.url = url;
-	}
-
-	public HttpURLConnection getConnection() {
-		return connection;
-	}
-
-	public void setConnection(HttpURLConnection connection) {
-		this.connection = connection;
+	public Auth getAuth()
+	{
+		return this.getAuth();
 	}
 	
-	public boolean isConnected()
+	public void setAuth(Auth auth)
 	{
-		return (this.connection == null);
-	}
-	
-	public HttpURLConnection setConnect()
-	{
-		if(this.getConnection() == null)
-		{
-			try {
-				return (HttpURLConnection) this.url.openConnection();
-			} catch (IOException e) {
-				System.out.println("Error creating connection is setConnect");
-				e.printStackTrace();
-				return null;
-			}
-		}
-		else
-		{
-			return this.getConnection();
-		}
-		
+		this.auth = auth;
 	}
 }
